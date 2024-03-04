@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "cytomine.name" . }}-pims-cache
+  name: {{ include "cytomine-ce.name" . }}-pims-cache
 spec:
   selector:
-    app: {{ include "cytomine.name" . }}-pims-cache
+    app: {{ include "cytomine-ce.name" . }}-pims-cache
   ports:
-    - name: {{ include "cytomine.name" . }}-pims-cache
+    - name: {{ include "cytomine-ce.name" . }}-pims-cache
       port: {{ .Values.pims_cache.port }}
       protocol: TCP

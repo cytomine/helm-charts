@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ include "cytomine.name" . }}-core-config
+  name: {{ include "cytomine-ce.name" . }}-core-config
 stringData:
   application.yml.sample: |-
     spring:
@@ -157,22 +157,22 @@ stringData:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "cytomine.name" . }}-core-env
+  name: {{ include "cytomine-ce.name" . }}-core-env
 data:
   ADMIN_EMAIL: info@cytomine.coop
   INSTANCE_HOST_PHONE_NUMBER: None
   INSTANCE_HOST_SUPPORT_MAIL: None
-  REVERSE_PROXY_URL: "{{ include "cytomine.name" . }}-nginx:{{ .Values.nginx.port }}"
+  REVERSE_PROXY_URL: "{{ include "cytomine-ce.name" . }}-nginx:{{ .Values.nginx.port }}"
   SERVER_ID: {{ .Values.core.server_id }}
   INSTANCE_HOST_WEBSITE_URL: "{{ .Values.web_ui.url_core }}"
   JAVAMELODY_PATH: /javamelody-core
   JAVAMELODY_USER: admin
-  MONGO_DB_NAME: {{ include "cytomine.name" . }}
-  MONGO_HOST: {{ include "cytomine.name" . }}-mongodb
+  MONGO_DB_NAME: {{ include "cytomine-ce.name" . }}
+  MONGO_HOST: {{ include "cytomine-ce.name" . }}-mongodb
   MONGO_PORT: "{{ .Values.mongodb.port }}"
   MONGO_USER: {{ .Values.mongodb.username }}
   POSTGIS_DB_NAME: {{ .Values.postgresql.user }}
-  POSTGIS_HOST: {{ include "cytomine.name" . }}-postgis
+  POSTGIS_HOST: {{ include "cytomine-ce.name" . }}-postgis
   POSTGIS_PORT: "{{ .Values.postgresql.port }}"
   POSTGIS_USER: {{ .Values.postgresql.user }}
   SMTP_HOST: {{ .Values.smtpHost }}
@@ -186,7 +186,7 @@ data:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ include "cytomine.name" . }}-core-secret
+  name: {{ include "cytomine-ce.name" . }}-core-secret
 type: Opaque
 stringData:
   ADMIN_PASSWORD: {{ .Values.core.admin_password }}

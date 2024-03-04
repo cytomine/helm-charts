@@ -1,30 +1,30 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "cytomine.name" . }}-mongodb
+  name: {{ include "cytomine-ce.name" . }}-mongodb
   annotations:
     kube-score/ignore: pod-probes,container-security-context-user-group-id
   labels:
     role: mongodb
-    app: {{ include "cytomine.name" . }}
+    app: {{ include "cytomine-ce.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     component: {{ .Release.Name }}-mongodb
     release: {{ .Release.Name }}
 spec:
   replicas: 1
-  serviceName: {{ include "cytomine.name" . }}-mongodb
+  serviceName: {{ include "cytomine-ce.name" . }}-mongodb
   selector:
     matchLabels:
-      app: {{ template "cytomine.name" . }}-mongodb
+      app: {{ template "cytomine-ce.name" . }}-mongodb
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
         role: mongodb
-        app: {{ template "cytomine.name" . }}-mongodb
+        app: {{ template "cytomine-ce.name" . }}-mongodb
         release: {{ .Release.Name }}
     spec:
-      serviceAccountName: {{ include "cytomine.serviceAccountName" . }}
+      serviceAccountName: {{ include "cytomine-ce.serviceAccountName" . }}
       {{- with .Values.global.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
@@ -54,7 +54,7 @@ spec:
             - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "cytomine.name" . }}-mongodb-secret
+                  name: {{ include "cytomine-ce.name" . }}-mongodb-secret
                   key: password
             - name: MONGO_INIT_DATABASE
               value: {{ .Values.mongodb.database }}

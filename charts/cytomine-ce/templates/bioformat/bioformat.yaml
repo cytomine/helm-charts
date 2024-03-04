@@ -2,12 +2,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "cytomine.name" . }}-bioformat
+  name: {{ include "cytomine-ce.name" . }}-bioformat
   annotations:
     kube-score/ignore: pod-probes
   labels:
     role: bioformat
-    app: {{ include "cytomine.name" . }}
+    app: {{ include "cytomine-ce.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     component: {{ .Release.Name }}-bioformat
     release: {{ .Release.Name }}
@@ -15,20 +15,20 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ template "cytomine.name" . }}-bioformat
+      app: {{ template "cytomine-ce.name" . }}-bioformat
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
         role: bioformat
-        app: {{ template "cytomine.name" . }}-bioformat
+        app: {{ template "cytomine-ce.name" . }}-bioformat
         release: {{ .Release.Name }}
     spec:
       securityContext:
         runAsUser: {{ .Values.containerSecurity.userID }}
         runAsGroup: {{ .Values.containerSecurity.groupID }}
         fsGroup: {{ .Values.containerSecurity.fsgroupID }}
-      serviceAccountName: {{ include "cytomine.serviceAccountName" . }}
+      serviceAccountName: {{ include "cytomine-ce.serviceAccountName" . }}
       {{- with .Values.global.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
@@ -36,7 +36,7 @@ spec:
       volumes:
         - name: images
           persistentVolumeClaim:
-            claimName: {{ template "cytomine.name" . }}-image-claim
+            claimName: {{ template "cytomine-ce.name" . }}-image-claim
         - name: temp
           emptyDir: {}
       containers:

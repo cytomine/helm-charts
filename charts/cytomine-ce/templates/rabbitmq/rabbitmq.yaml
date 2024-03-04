@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "cytomine.name" . }}-rabbitmq
+  name: {{ include "cytomine-ce.name" . }}-rabbitmq
   annotations:
     kube-score/ignore: pod-probes,container-security-context-user-group-id
   labels:
     role: rabbitmq
-    app: {{ include "cytomine.name" . }}
+    app: {{ include "cytomine-ce.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     component: {{ .Release.Name }}-rabbitmq
     release: {{ .Release.Name }}
@@ -14,19 +14,19 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ template "cytomine.name" . }}-rabbitmq
+      app: {{ template "cytomine-ce.name" . }}-rabbitmq
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
         role: rabbitmq
-        app: {{ template "cytomine.name" . }}-rabbitmq
+        app: {{ template "cytomine-ce.name" . }}-rabbitmq
         release: {{ .Release.Name }}
     spec:
       securityContext:
         runAsUser: {{ .Values.containerSecurity.userID }}
         fsGroup: {{ .Values.containerSecurity.fsgroupID }}
-      serviceAccountName: {{ include "cytomine.serviceAccountName" . }}
+      serviceAccountName: {{ include "cytomine-ce.serviceAccountName" . }}
       {{- with .Values.global.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}

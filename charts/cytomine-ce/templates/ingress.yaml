@@ -1,7 +1,7 @@
-docker apiVersion: networking.k8s.io/v1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "cytomine.name" . }}-ingress
+  name: {{ include "cytomine-ce.name" . }}-ingress
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 2000m
 spec:
@@ -13,7 +13,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ include "cytomine.name" . }}-nginx
+                name: {{ include "cytomine-ce.name" . }}-nginx
                 port:
                   number: {{ .Values.nginx.port }}
     - host: {{ .Values.global.urlUpload }}
@@ -23,7 +23,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ include "cytomine.name" . }}-nginx
+                name: {{ include "cytomine-ce.name" . }}-nginx
                 port:
                   number: {{ .Values.nginx.port }}
     - host: {{ .Values.global.imsDomainName }}
@@ -33,6 +33,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ include "cytomine.name" . }}-nginx
+                name: {{ include "cytomine-ce.name" . }}-nginx
                 port:
                   number: {{ .Values.nginx.port }}

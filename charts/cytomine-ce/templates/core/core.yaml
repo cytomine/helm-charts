@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "cytomine.name" . }}-core
+  name: {{ include "cytomine-ce.name" . }}-core
   annotations:
     kube-score/ignore: pod-probes,container-security-context-user-group-id
   labels:
     role: core
-    app: {{ include "cytomine.name" . }}
+    app: {{ include "cytomine-ce.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     component: {{ .Release.Name }}-core
     release: {{ .Release.Name }}
@@ -14,19 +14,19 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ template "cytomine.name" . }}-core
+      app: {{ template "cytomine-ce.name" . }}-core
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
         role: core
-        app: {{ template "cytomine.name" . }}-core
+        app: {{ template "cytomine-ce.name" . }}-core
         release: {{ .Release.Name }}
     spec:
       securityContext:
         runAsUser: {{ .Values.containerSecurity.userID }}
         fsGroup: {{ .Values.containerSecurity.fsgroupID }}
-      serviceAccountName: {{ include "cytomine.serviceAccountName" . }}
+      serviceAccountName: {{ include "cytomine-ce.serviceAccountName" . }}
       {{- with .Values.global.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
@@ -34,10 +34,10 @@ spec:
       volumes:
       - name: core-config
         secret:
-          secretName: {{ include "cytomine.name" . }}-core-config
-      - name: {{ include "cytomine.name" . }}-core-localtime
+          secretName: {{ include "cytomine-ce.name" . }}-core-config
+      - name: {{ include "cytomine-ce.name" . }}-core-localtime
         configMap:
-          name: {{ include "cytomine.name" . }}-localtime
+          name: {{ include "cytomine-ce.name" . }}-localtime
       - name: temp
         emptyDir: {}
       containers:
@@ -46,9 +46,9 @@ spec:
           imagePullPolicy: {{ .Values.images.pullPolicy }}
           envFrom:
             - configMapRef:
-                name: cytomine-core-env
+                name: cytomine-ce-core-env
             - secretRef:
-                name: cytomine-core-secret
+                name: cytomine-ce-core-secret
           volumeMounts:
             - name: core-config
               mountPath:  /cm_configs/app/application.yml.sample
@@ -56,7 +56,7 @@ spec:
             - name: core-config
               mountPath:  /cm_configs/app/logback.xml
               subPath: logback.xml
-            - name: {{ include "cytomine.name" . }}-core-localtime
+            - name: {{ include "cytomine-ce.name" . }}-core-localtime
               mountPath: /etc/localtime
               subPath: Europe
             - name: temp

@@ -1,11 +1,11 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{ include "cytomine.name" . }}-pims-cache
+  name: {{ include "cytomine-ce.name" . }}-pims-cache
 spec:
   podSelector:
     matchLabels:
-      app: {{ include "cytomine.name" . }}-pims-cache
+      app: {{ include "cytomine-ce.name" . }}-pims-cache
   policyTypes:
     - Egress
     - Ingress
@@ -13,7 +13,7 @@ spec:
     - from:
         - podSelector:
             matchLabels:
-              app: {{ include "cytomine.name" . }}-pims
+              app: {{ include "cytomine-ce.name" . }}-pims
       ports:
         - protocol: {{ .Values.global.protocol }}
           port: {{ .Values.pims_cache.port}}

@@ -1,11 +1,11 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{ include "cytomine.name" . }}-pims
+  name: {{ include "cytomine-ce.name" . }}-pims
 spec:
   podSelector:
     matchLabels:
-      app: {{ include "cytomine.name" . }}-pims
+      app: {{ include "cytomine-ce.name" . }}-pims
   policyTypes:
     - Egress
     - Ingress
@@ -14,7 +14,7 @@ spec:
     - to:
         - podSelector:
             matchLabels:
-              app: {{ include "cytomine.name" . }}-pims-cache
+              app: {{ include "cytomine-ce.name" . }}-pims-cache
       ports:
         - protocol: {{ .Values.global.protocol }}
           port: {{ .Values.pims_cache.port }}
@@ -22,7 +22,7 @@ spec:
     - to:
         - podSelector:
             matchLabels:
-              app: {{ include "cytomine.name" . }}-rabbitmq
+              app: {{ include "cytomine-ce.name" . }}-rabbitmq
       ports:
         - protocol: {{ .Values.global.protocol }}
           port: {{ .Values.rabbitmq.port }}
@@ -68,7 +68,7 @@ spec:
     - from:
         - podSelector:
             matchLabels:
-              app: {{ include "cytomine.name" . }}-nginx
+              app: {{ include "cytomine-ce.name" . }}-nginx
       ports:
         - protocol: {{ .Values.global.protocol }}
           port: {{ .Values.pims.port }}

@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "cytomine.name" . }}-pims-cache
+  name: {{ include "cytomine-ce.name" . }}-pims-cache
   annotations:
     kube-score/ignore: pod-probes
   labels:
-    role: {{ include "cytomine.name" . }}-pims-cache
-    app: {{ include "cytomine.name" . }}
+    role: {{ include "cytomine-ce.name" . }}-pims-cache
+    app: {{ include "cytomine-ce.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     component: {{ .Release.Name }}-pims-cache
     release: {{ .Release.Name }}
@@ -14,20 +14,20 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ template "cytomine.name" . }}-pims-cache
+      app: {{ template "cytomine-ce.name" . }}-pims-cache
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
         role: pims-cache
-        app: {{ template "cytomine.name" . }}-pims-cache
+        app: {{ template "cytomine-ce.name" . }}-pims-cache
         release: {{ .Release.Name }}
     spec:
       securityContext:
         runAsUser: {{ .Values.containerSecurity.userID }}
         runAsGroup: {{ .Values.containerSecurity.groupID }}
         fsGroup: {{ .Values.containerSecurity.fsgroupID }}
-      serviceAccountName: {{ include "cytomine.serviceAccountName" . }}
+      serviceAccountName: {{ include "cytomine-ce.serviceAccountName" . }}
       {{- with .Values.global.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}

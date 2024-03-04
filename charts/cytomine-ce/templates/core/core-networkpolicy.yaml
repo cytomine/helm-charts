@@ -1,11 +1,11 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{ include "cytomine.name" . }}-core
+  name: {{ include "cytomine-ce.name" . }}-core
 spec:
   podSelector:
     matchLabels:
-      app: {{ include "cytomine.name" . }}-core
+      app: {{ include "cytomine-ce.name" . }}-core
   policyTypes:
     - Ingress
     - Egress
@@ -14,7 +14,7 @@ spec:
     - to:
          - podSelector:
              matchLabels:
-               app: {{ include "cytomine.name" . }}-mongodb
+               app: {{ include "cytomine-ce.name" . }}-mongodb
       ports:
         - protocol: {{ .Values.global.protocol }}
           port: {{ .Values.mongodb.port }}
@@ -35,7 +35,7 @@ spec:
     - to:
          - podSelector:
              matchLabels:
-               app: {{ include "cytomine.name" . }}-postgis
+               app: {{ include "cytomine-ce.name" . }}-postgis
       ports:
         - protocol: {{ .Values.global.protocol }}
           port: {{ .Values.postgresql.port }}
@@ -43,7 +43,7 @@ spec:
     - to:
          - podSelector:
              matchLabels:
-               app: {{ include "cytomine.name" . }}-rabbitmq
+               app: {{ include "cytomine-ce.name" . }}-rabbitmq
       ports:
         - protocol: {{ .Values.global.protocol }}
           port: {{ .Values.rabbitmq.port }}
@@ -51,7 +51,7 @@ spec:
     - to:
          - podSelector:
              matchLabels:
-               app: {{ include "cytomine.name" . }}-bioformat
+               app: {{ include "cytomine-ce.name" . }}-bioformat
       ports:
         - protocol: {{ .Values.global.protocol }}
           port: {{ .Values.bioformat.port }}
@@ -87,7 +87,7 @@ spec:
     - from:
         - podSelector:
             matchLabels:
-              app: {{ include "cytomine.name" . }}-nginx
+              app: {{ include "cytomine-ce.name" . }}-nginx
       ports:
         - protocol: {{ .Values.global.protocol }}
           port: {{ .Values.core.port }}

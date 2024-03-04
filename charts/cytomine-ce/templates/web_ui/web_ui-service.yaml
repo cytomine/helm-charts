@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "cytomine.name" . }}-web-ui
+  name: {{ include "cytomine-ce.name" . }}-web-ui
 spec:
   selector:
-    app: {{ include "cytomine.name" . }}-web-ui
+    app: {{ include "cytomine-ce.name" . }}-web-ui
   ports:
     - name: http
       port: {{ .Values.web_ui.port }}

@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "cytomine.name" . }}-nginx
+  name: {{ include "cytomine-ce.name" . }}-nginx
 spec:
   selector:
-    app: {{ include "cytomine.name" . }}-nginx
+    app: {{ include "cytomine-ce.name" . }}-nginx
   ports:
     - name: http
       port: {{ .Values.nginx.port }}
