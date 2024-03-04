@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "cytomine.name" . }}-pims
+spec:
+  selector:
+    app: {{ include "cytomine.name" . }}-pims
+  ports:
+    - name: http
+      port: {{ .Values.pims.port }}
+      protocol: TCP
+
