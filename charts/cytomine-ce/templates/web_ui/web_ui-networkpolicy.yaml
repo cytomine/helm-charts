@@ -1,11 +1,11 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{ include "cytomine-ce.name" . }}-web-ui
+  name: {{ include "cytomine.name" . }}-web-ui
 spec:
   podSelector:
     matchLabels:
-      app: {{ include "cytomine-ce.name" . }}-web-ui
+      app: {{ include "cytomine.name" . }}-web-ui
   policyTypes:
     - Ingress
     - Egress
@@ -14,7 +14,7 @@ spec:
     - from:
         - podSelector:
             matchLabels:
-              app: {{ include "cytomine-ce.name" . }}-nginx
+              app: {{ include "cytomine.name" . }}-nginx
       ports:
         - protocol: {{ .Values.global.protocol }}
           port: {{ .Values.web_ui.port }}

@@ -1,4 +1,4 @@
-# Default values for cytomine-ce.
+# Default values for cytomine.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -37,7 +37,13 @@ smtpPort: 587
 # Ingress - these are things that has to do with the user facing webpage
 #
 ingress:
-  annotations: {}
+  annotations:
+    # Increase the maximum allowed body size to handle image uploads
+    nginx.ingress.kubernetes.io/proxy-body-size: 2000m
+
+  # Enable TLS configuration for the hosts defined in global.domainName, global.imsDomainName and global.urlUpload
+  # The TLS certificate will be retrieved from a secret named {{ include "cytomine.name" . }}-tls
+  tls: false
 
 #
 # Images

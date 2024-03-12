@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "cytomine-ce.name" . }}-rabbitmq
+  name: {{ include "cytomine.name" . }}-rabbitmq
 spec:
   selector:
-    app: {{ include "cytomine-ce.name" . }}-rabbitmq
+    app: {{ include "cytomine.name" . }}-rabbitmq
   ports:
     - name: amqp
       port: {{ .Values.rabbitmq.port }}

@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "cytomine-ce.name" . }}-nginx
+  name: {{ include "cytomine.name" . }}-nginx
   annotations:
     kube-score/ignore: pod-probes,container-security-context-user-group-id
   labels:
     role: nginx
-    app: {{ include "cytomine-ce.name" . }}
+    app: {{ include "cytomine.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     component: {{ .Release.Name }}-nginx
     release: {{ .Release.Name }}
@@ -14,30 +14,30 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ template "cytomine-ce.name" . }}-nginx
+      app: {{ template "cytomine.name" . }}-nginx
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
         role: nginx
-        app: {{ template "cytomine-ce.name" . }}-nginx
+        app: {{ template "cytomine.name" . }}-nginx
         release: {{ .Release.Name }}
     spec:
       securityContext:
         runAsUser: {{ .Values.containerSecurity.userID }}
         fsGroup: {{ .Values.containerSecurity.fsgroupID }}
-      serviceAccountName: {{ include "cytomine-ce.serviceAccountName" . }}
+      serviceAccountName: {{ include "cytomine.serviceAccountName" . }}
       {{- with .Values.global.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-        - name: {{ include "cytomine-ce.name" . }}-nginx-config
+        - name: {{ include "cytomine.name" . }}-nginx-config
           configMap:
-            name: {{ include "cytomine-ce.name" . }}-nginx-config
+            name: {{ include "cytomine.name" . }}-nginx-config
         - name: image-temp
           persistentVolumeClaim:
-            claimName: {{ template "cytomine-ce.name" . }}-temp-image-claim
+            claimName: {{ template "cytomine.name" . }}-temp-image-claim
         - name: temp
           emptyDir: {}
       containers:
@@ -67,12 +67,12 @@ spec:
 
           envFrom:
             - configMapRef:
-                name: {{ include "cytomine-ce.name" . }}-nginx-global-config
+                name: {{ include "cytomine.name" . }}-nginx-global-config
           volumeMounts:
-            - name: {{ include "cytomine-ce.name" . }}-nginx-config
+            - name: {{ include "cytomine.name" . }}-nginx-config
               mountPath: /cm_configs/etc/nginx/nginx.conf.sample
               subPath: nginx.conf.sample
-            - name: {{ include "cytomine-ce.name" . }}-nginx-config
+            - name: {{ include "cytomine.name" . }}-nginx-config
               mountPath: /cm_configs/etc/nginx/cors_params
               subPath: cors_params
             - name: image-temp

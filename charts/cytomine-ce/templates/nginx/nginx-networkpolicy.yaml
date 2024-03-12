@@ -1,11 +1,11 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{ include "cytomine-ce.name" . }}-nginx
+  name: {{ include "cytomine.name" . }}-nginx
 spec:
   podSelector:
     matchLabels:
-      app: {{ include "cytomine-ce.name" . }}-nginx
+      app: {{ include "cytomine.name" . }}-nginx
   policyTypes:
     - Egress
     - Ingress
@@ -26,7 +26,7 @@ spec:
     - to:
         - podSelector:
             matchLabels:
-              app: {{ include "cytomine-ce.name" . }}-web-ui
+              app: {{ include "cytomine.name" . }}-web-ui
       ports:
         - protocol: {{ .Values.global.protocol }}
           port: {{ .Values.web_ui.port }}
@@ -34,7 +34,7 @@ spec:
     - to:
         - podSelector:
             matchLabels:
-              app: {{ include "cytomine-ce.name" . }}-core
+              app: {{ include "cytomine.name" . }}-core
       ports:
         - protocol: {{ .Values.global.protocol }}
           port: {{ .Values.core.port }}
@@ -42,7 +42,7 @@ spec:
     - to:
         - podSelector:
             matchLabels:
-              app: {{ include "cytomine-ce.name" . }}-pims
+              app: {{ include "cytomine.name" . }}-pims
       ports:
         - protocol: {{ .Values.global.protocol }}
           port: {{ .Values.pims.port }}
@@ -50,7 +50,7 @@ spec:
     - to:
         - podSelector:
             matchLabels:
-              app: {{ include "cytomine-ce.name" . }}-mongodb
+              app: {{ include "cytomine.name" . }}-mongodb
       ports:
         - protocol: {{ .Values.global.protocol }}
           port: {{ .Values.mongodb.port }}

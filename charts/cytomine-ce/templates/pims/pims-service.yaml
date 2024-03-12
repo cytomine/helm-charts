@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "cytomine-ce.name" . }}-pims
+  name: {{ include "cytomine.name" . }}-pims
 spec:
   selector:
-    app: {{ include "cytomine-ce.name" . }}-pims
+    app: {{ include "cytomine.name" . }}-pims
   ports:
     - name: http
       port: {{ .Values.pims.port }}

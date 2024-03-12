@@ -3,7 +3,17 @@ entries:
   cytomine-ce:
   - apiVersion: v2
     appVersion: v4.4.1
-    created: "2024-03-04T17:38:29.71333973+01:00"
+    created: "2024-03-12T11:13:21.8271092+01:00"
+    description: A Helm chart for installing the Cytomine system
+    digest: 8eac35c38750a5c124ac649df874451987e7e5de874e318466c2c8aa131e1bbd
+    name: cytomine-ce
+    type: application
+    urls:
+    - https://cytomine.github.io/helm-charts/cytomine-ce-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: v4.4.1
+    created: "2024-03-12T11:13:21.825836075+01:00"
     description: A Helm chart for installing the Cytomine system
     digest: 89a1d15e84071717633d493fb1ff317fac685ac65db45181051c5791b84c9833
     name: cytomine-ce
@@ -11,4 +21,4 @@ entries:
     urls:
     - https://cytomine.github.io/helm-charts/cytomine-ce-0.2.0.tgz
     version: 0.2.0
-generated: "2024-03-04T17:38:29.711907055+01:00"
+generated: "2024-03-12T11:13:21.824512683+01:00"

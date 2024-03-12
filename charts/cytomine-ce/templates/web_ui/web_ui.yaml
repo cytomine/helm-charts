@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "cytomine-ce.name" . }}-web-ui
+  name: {{ include "cytomine.name" . }}-web-ui
   annotations:
     kube-score/ignore: pod-probes,container-security-context-user-group-id
   labels:
     role: web-ui
-    app: {{ include "cytomine-ce.name" . }}
+    app: {{ include "cytomine.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     component: {{ .Release.Name }}-web-ui
     release: {{ .Release.Name }}
@@ -14,30 +14,30 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ template "cytomine-ce.name" . }}-web-ui
+      app: {{ template "cytomine.name" . }}-web-ui
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
         role: web-ui
-        app: {{ template "cytomine-ce.name" . }}-web-ui
+        app: {{ template "cytomine.name" . }}-web-ui
         release: {{ .Release.Name }}
     spec:
       securityContext:
         runAsUser: {{ .Values.containerSecurity.userID }}
         fsGroup: {{ .Values.containerSecurity.fsgroupID }}
-      serviceAccountName: {{ include "cytomine-ce.serviceAccountName" . }}
+      serviceAccountName: {{ include "cytomine.serviceAccountName" . }}
       {{- with .Values.global.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-      - name: {{ include "cytomine-ce.name" . }}-web-ui-config
+      - name: {{ include "cytomine.name" . }}-web-ui-config
         configMap:
-          name: {{ include "cytomine-ce.name" . }}-web-ui-config
-      - name: {{ include "cytomine-ce.name" . }}-web-ui-localtime
+          name: {{ include "cytomine.name" . }}-web-ui-config
+      - name: {{ include "cytomine.name" . }}-web-ui-localtime
         configMap:
-          name: {{ include "cytomine-ce.name" . }}-localtime
+          name: {{ include "cytomine.name" . }}-localtime
       - name: temp
         emptyDir: {}
       containers:
@@ -52,13 +52,13 @@ spec:
           - name: CYTOMINE_COMMERCIAL_VERSION
             value: {{ .Values.web_ui.commercial_version }}
           volumeMounts:
-            - name: {{ include "cytomine-ce.name" . }}-web-ui-localtime
+            - name: {{ include "cytomine.name" . }}-web-ui-localtime
               mountPath: /etc/localtime
               subPath: Europe
-            - name: {{ include "cytomine-ce.name" . }}-web-ui-config
+            - name: {{ include "cytomine.name" . }}-web-ui-config
               mountPath: /cm_configs/app/configuration.json.sample
               subPath: configuration.json.sample
-            - name: {{ include "cytomine-ce.name" . }}-web-ui-config
+            - name: {{ include "cytomine.name" . }}-web-ui-config
               mountPath: /etc/nginx/nginx.conf
               subPath: nginx.conf
             - name: temp
