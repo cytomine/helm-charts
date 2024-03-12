@@ -46,9 +46,9 @@ spec:
           imagePullPolicy: {{ .Values.images.pullPolicy }}
           envFrom:
             - configMapRef:
-                name: cytomine-core-env
+                name: {{ include "cytomine.name" . }}-core-env
             - secretRef:
-                name: cytomine-core-secret
+                name: {{ include "cytomine.name" . }}-core-secret
           volumeMounts:
             - name: core-config
               mountPath:  /cm_configs/app/application.yml.sample
