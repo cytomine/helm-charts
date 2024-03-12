@@ -26,6 +26,14 @@ spec:
       ports:
         - protocol: {{ .Values.global.protocol }}
           port: {{ .Values.rabbitmq.port }}
+  # Internal service to service communications
+    - to:
+        - podSelector:
+            matchLabels:
+              app: {{ include "cytomine.name" . }}-nginx
+      ports:
+        - protocol: {{ .Values.global.protocol }}
+          port: {{ .Values.nginx.port }}
   #Ingress-nginx
     - to:
         - namespaceSelector:
@@ -63,6 +71,8 @@ spec:
       ports:
         - port: 53
           protocol: UDP
+        - port: 53
+          protocol: TCP
   ingress:
   #Nginx
     - from:

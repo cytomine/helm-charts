@@ -21,6 +21,13 @@ spec:
       ports:
         - protocol: {{ .Values.global.protocol }}
           port: {{ .Values.nginx.port }}
+    - from:
+        - podSelector:
+            matchLabels:
+              app: {{ include "cytomine.name" . }}-pims
+      ports:
+        - protocol: {{ .Values.global.protocol }}
+          port: {{ .Values.nginx.port }}
   egress:
   #Web-ui
     - to:

@@ -37,6 +37,7 @@ smtpPort: 587
 # Ingress - these are things that has to do with the user facing webpage
 #
 ingress:
+  ingressClassName: "nginx"
   annotations:
     # Increase the maximum allowed body size to handle image uploads
     nginx.ingress.kubernetes.io/proxy-body-size: 2000m
